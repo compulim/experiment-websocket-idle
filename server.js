@@ -1,2 +1,2 @@
 // This is the entrypoint for Azure Web Apps.
-import './lib/index.js';
+require('./lib/index.js');
