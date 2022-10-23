@@ -9,7 +9,7 @@
     "start:babel": "npm run build -- --watch",
     "start:server": "node-dev ."
   },
-  "type": "module",
+  "type": "commonjs",
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
   "devDependencies": {
