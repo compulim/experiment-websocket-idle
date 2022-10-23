@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>experiment-websocket-idle</title>
+  </head>
+  <body>
+    <div id="logs" role="log"></div>
+    <script>
+      'use strict';
+
+      const startTime = Date.now();
+
+      function log(message) {
+        console.log(message);
+
+        const preElement = document.createElement('pre');
+
+        preElement.innerText = `${Date.now() - startTime}ms: ${message}`;
+
+        document.getElementById('logs').appendChild(preElement);
+      }
+
+      (async function () {
+        const ws = new WebSocket(`${location.protocol.replace(/^http(s?:)$/, 'ws$1')}//${location.host}/`);
+
+        ws.addEventListener('open', () => {
+          log('Opened');
+        });
+
+        ws.addEventListener('close', () => {
+          log('Closed');
+        });
+
+        ws.addEventListener('error', () => {
+          log(`Error: ${error.message}`);
+        });
+
+        ws.addEventListener('message', ({ data }) => {
+          log(`Message: ${data}`);
+        });
+      })();
+    </script>
+  </body>
+</html>
