@@ -11,15 +11,19 @@
       'use strict';
 
       const startTime = Date.now();
+      let lastLogTime = startTime;
 
       function log(message) {
         console.log(message);
 
+        const now = new Date();
         const preElement = document.createElement('pre');
 
-        preElement.innerText = `${new Date().toLocaleTimeString()} (${Date.now() - startTime}ms): ${message}`;
+        preElement.innerText = `${now.toLocaleTimeString()} (@${+now - startTime}ms) (+${+now - lastLogTime}ms): ${message}`;
 
         document.getElementById('logs').appendChild(preElement);
+
+        lastLogTime = now;
       }
 
       (async function () {
