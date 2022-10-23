@@ -1,0 +1,25 @@
+{
+  "name": "experiment-websocket-idle",
+  "version": "0.0.0-0",
+  "description": "",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "babel ./src/index.js --out-dir=./lib",
+    "start": "concurrently --kill-others \"npm run start:*\"",
+    "start:babel": "npm run build -- --watch",
+    "start:server": "node-dev ."
+  },
+  "type": "module",
+  "author": "William Wong (https://github.com/compulim)",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "@babel/preset-env": "^7.19.4",
+    "concurrently": "^7.5.0",
+    "node-dev": "^7.4.3"
+  },
+  "dependencies": {
+    "express": "4.18.2"
+  }
+}
