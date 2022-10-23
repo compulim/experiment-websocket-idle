@@ -1,5 +1,4 @@
 import { createServer } from 'http';
-import { fileURLToPath } from 'url';
 import { resolve } from 'path';
 import { WebSocketServer } from 'ws';
 import createExpress, { static as createStaticMiddleware } from 'express';
