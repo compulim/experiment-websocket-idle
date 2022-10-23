@@ -15,7 +15,7 @@
 
         const preElement = document.createElement('pre');
 
-        preElement.innerText = `${Date.now() - startTime}ms: ${message}`;
+        preElement.innerText = `${new Date().toLocaleTimeString()} (${Date.now() - startTime}ms): ${message}`;
 
         document.getElementById('logs').appendChild(preElement);
       }
@@ -37,6 +37,10 @@
 
         ws.addEventListener('message', ({ data }) => {
           log(`Message: ${data}`);
+        });
+
+        window.addEventListener('visibilitychange', () => {
+          log(`VisbiilityChange: ${document.visibilityState}`);
         });
       })();
     </script>
