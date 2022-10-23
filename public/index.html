@@ -4,6 +4,7 @@
     <title>experiment-websocket-idle</title>
   </head>
   <body>
+    <button id="send-message">Send</button>
     <div id="logs" role="log"></div>
     <script>
       'use strict';
@@ -24,23 +25,31 @@
         const ws = new WebSocket(`${location.protocol.replace(/^http(s?:)$/, 'ws$1')}//${location.host}/`);
 
         ws.addEventListener('open', () => {
-          log('Opened');
+          log('Web Socket has opened.');
         });
 
         ws.addEventListener('close', () => {
-          log('Closed');
+          log('Web Socket is closed.');
         });
 
         ws.addEventListener('error', () => {
-          log(`Error: ${error.message}`);
+          log(`Got an error: ${error.message}`);
         });
 
         ws.addEventListener('message', ({ data }) => {
-          log(`Message: ${data}`);
+          log(`Received a message: ${data}`);
         });
 
         window.addEventListener('visibilitychange', () => {
-          log(`VisbiilityChange: ${document.visibilityState}`);
+          log(`Visibility changed: ${document.visibilityState}`);
+        });
+
+        document.getElementById('send-message').addEventListener('click', () => {
+          const text = `Aloha at ${new Date().toLocaleTimeString()}`;
+
+          log(`Sending: ${text}`);
+
+          ws.send(text);
         });
       })();
     </script>

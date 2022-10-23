@@ -19,6 +19,14 @@ import createExpress, { static as createStaticMiddleware } from 'express';
     console.log(`Connected`);
 
     ws.send('Hello, World!');
+
+    ws.on('message', data => {
+      const text = data.toString('utf8');
+
+      console.log(text);
+
+      ws.send(text);
+    });
   });
 
   server.listen(PORT, () => {
