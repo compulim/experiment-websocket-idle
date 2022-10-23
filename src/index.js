@@ -9,9 +9,9 @@ import createExpress, { static as createStaticMiddleware } from 'express';
   const { PORT = 5000 } = process.env;
 
   app.get('/health.txt', (_, res) => res.send('OK'));
-  app.get('/', createStaticMiddleware(resolve(fileURLToPath(import.meta.url), '../../public/')));
+  app.get('/', createStaticMiddleware(resolve(__dirname, '../public/')));
 
-  console.log(resolve(fileURLToPath(import.meta.url), '../../public/'));
+  console.log(resolve(__dirname, '../public/'));
 
   const server = createServer(app);
   const webSocketServer = new WebSocketServer({ server });
