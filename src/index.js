@@ -12,9 +12,16 @@ function log(message) {
   lastLogTime = now;
 }
 
+function removeInline(array, item) {
+  const index = array.indexOf(item);
+
+  ~index && array.splice(index, 1);
+}
+
 (function () {
   const app = createExpress();
   const { PORT = 5000 } = process.env;
+  const activeWebSockets = [];
 
   app.get('/health.txt', (_, res) => res.send('OK'));
   app.get('/', createStaticMiddleware(resolve(__dirname, '../public/')));
@@ -27,6 +34,8 @@ function log(message) {
   webSocketServer.on('connection', ws => {
     log(`Connected`);
 
+    activeWebSockets.push(ws);
+
     ws.send('Hello, World!');
 
     ws.on('message', data => {
@@ -37,9 +46,28 @@ function log(message) {
       ws.send(text);
     });
 
-    ws.on('close', data => {
+    ws.on('close', () => {
       log('Closed');
+      removeInline(activeWebSockets, ws);
     });
+
+    ws.on('ping', () => {
+      log('Received a ping');
+    });
+
+    ws.on('pong', () => {
+      log('Received a pong');
+    });
+  });
+
+  app.get('/close-all', () => {
+    log('Closing all Web Socket connections');
+    activeWebSockets.map(ws => ws.close());
+  });
+
+  app.get('/send-something', () => {
+    log('Sending something to all Web Socket connections');
+    activeWebSockets.map(ws => ws.send('Aloha!'));
   });
 
   server.listen(PORT, () => {
