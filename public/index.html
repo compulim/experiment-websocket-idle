@@ -18,8 +18,9 @@
 
         const now = new Date();
         const preElement = document.createElement('pre');
+        const timestamp = `${now.toLocaleTimeString()} (@${+now - startTime}ms) (+${+now - lastLogTime}ms)`;
 
-        preElement.innerText = `${now.toLocaleTimeString()} (@${+now - startTime}ms) (+${+now - lastLogTime}ms): ${message}`;
+        preElement.innerText = `${timestamp.padEnd(40, ' ')}${message}`;
 
         document.getElementById('logs').appendChild(preElement);
 

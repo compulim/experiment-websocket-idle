@@ -26,7 +26,7 @@ function uniqueId() {
   app.get('/health.txt', (_, res) => res.send('OK'));
   app.get('/', createStaticMiddleware(resolve(__dirname, '../public/')));
 
-  log(resolve(__dirname, '../public/'));
+  log(`*****: ${resolve(__dirname, '../public/')}`);
 
   const server = createServer(app);
   const webSocketServer = new WebSocketServer({ server });
@@ -59,7 +59,7 @@ function uniqueId() {
   });
 
   app.get('/kill-all', () => {
-    log('Closing all Web Socket connections');
+    log('*****: Closing all Web Socket connections');
 
     for (const ws of activeWebSockets.values()) {
       ws.close();
@@ -67,7 +67,7 @@ function uniqueId() {
   });
 
   app.get('/ping-all', () => {
-    log('Pinging all Web Socket connections');
+    log('*****: Pinging all Web Socket connections');
 
     for (const ws of activeWebSockets.values()) {
       ws.ping();
@@ -75,12 +75,12 @@ function uniqueId() {
   });
 
   app.get('/send-something', () => {
-    log('Sending something to all Web Socket connections');
+    log('*****: Sending something to all Web Socket connections');
 
     for (const ws of activeWebSockets.values()) {
       ws.send('Aloha!');
     }
   });
 
-  server.listen(PORT, () => log(`Listening to port ${PORT}`));
+  server.listen(PORT, () => log(`*****: Listening to port ${PORT}`));
 })();
