@@ -82,5 +82,11 @@ function uniqueId() {
     }
   });
 
+  app.get('/kill-myself', () => {
+    log('*****: Killing this server');
+
+    process.exit(-1);
+  });
+
   server.listen(PORT, () => log(`*****: Listening to port ${PORT}`));
 })();
