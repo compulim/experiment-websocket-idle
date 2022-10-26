@@ -58,32 +58,40 @@ function uniqueId() {
     ws.on('pong', () => log(`${id}: Received a pong`));
   });
 
-  app.get('/kill-all', () => {
+  app.get('/kill-all', (_, res) => {
     log('*****: Closing all Web Socket connections');
 
     for (const ws of activeWebSockets.values()) {
       ws.close();
     }
+
+    res.send('OK');
   });
 
-  app.get('/ping-all', () => {
+  app.get('/ping-all', (_, res) => {
     log('*****: Pinging all Web Socket connections');
 
     for (const ws of activeWebSockets.values()) {
       ws.ping();
     }
+
+    res.send('OK');
   });
 
-  app.get('/send-something', () => {
+  app.get('/send-something', (_, res) => {
     log('*****: Sending something to all Web Socket connections');
 
     for (const ws of activeWebSockets.values()) {
       ws.send('Aloha!');
     }
+
+    res.send('OK');
   });
 
-  app.get('/kill-myself', () => {
+  app.get('/kill-myself', (_, res) => {
     log('*****: Killing this server');
+
+    res.send('OK');
 
     process.exit(-1);
   });
